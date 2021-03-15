@@ -1,0 +1,6 @@
+Flask==1.1.2
+Flask-Migrate==2.7.0
+Flask-Script==2.0.6
+PyMySQL==1.0.2
+Flask-Mail==0.9.1
+twilio==6.53.0
