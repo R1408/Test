@@ -73,7 +73,7 @@ def signin():
 
 @app.route('/logout')
 def logout():
-    session = {}
+    session['is_user_login'] = False
     return render_template("signin.html")
 
 
@@ -84,12 +84,11 @@ def signin_user():
     data = User.query.filter_by(phone_number=mobile_number).all()
     if data:
         user_login = User_login.query.filter_by(user_id=data[0].id).all()
-        print(user_login)
         if user_login:
             if datetime.utcnow() < user_login[0].last_login:
                 return make_response("<b>You will signin after 5 Minutes </b>")
     key = os.environ.get("TWILIO_SECRET_KEY", "ACfb3a006c0707c3514ea2a5a5c1313235")
-    token = os.environ.get("TWILIO_SECRET_TOKEN", "c988bd441e483a9f9c978875614f1b64")
+    token = os.environ.get("TWILIO_SECRET_TOKEN", "3f6816734d6b61826402f9f11644fe96")
     client = Client(key, token)
     global number
     number = random.randint(1000, 9999)
@@ -112,26 +111,16 @@ def user_otp():
         session['attempt_time'] += 1
     else:
         session['attempt_time'] = 0
-    print('attempt time', session['attempt_time'])
     if session['attempt_time'] >= 3:
         now = datetime.utcnow()
         next_login_time = now + timedelta(minutes=5)
-        print(now)
-        print(next_login_time)
-        print(mobile_number)
         find_user = User.query.filter_by(phone_number=mobile_number).all()
-        print("user found ", find_user)
-        print("session is ", session)
-        print(find_user[0].id)
         if find_user:
-            # obj = User_login(user_id=find_user[0].id, session=int(session['user_number']),
-            #            last_login=next_login_time)
-            # db.session.update(obj)
             obj = User_login.query.filter_by(user_id=find_user[0].id).all()
-            print('obj is ', obj)
             obj[0].last_login = next_login_time
             db.session.commit()
         session['attempt_time'] = 0
+        session['is_user_login'] = False
         return make_response("<h4>You will be blocked for 5 minutes</h4> <a href = '/signin'>Login</a>")
     else:
         if otp_num == number:
