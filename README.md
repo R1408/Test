@@ -8,14 +8,14 @@ or
 download the zip file from [DRC_test](https://codeload.github.com/R1408/Test/zip/develop)
 and extract the file
 
-##The floder structure should be
+## The floder structure should be
 ## If you clone the project
 ```
 python_test -- Test
             -- venv
             -- requirements
 ```
-##If you download zip file
+## If you download zip file
 ```
 Test-development -- Test
                  -- venv
@@ -31,7 +31,7 @@ select python version
 ```
 install requirements if it is not installed
 
-###for install requirements
+### for install requirements
 ```
 pip install -r requirements.txt
 ```
@@ -51,5 +51,5 @@ configure env file in your project
 
 run main.py file
 
-###open below URL 
+### open below URL 
 ```  http://localhost:5000/```
