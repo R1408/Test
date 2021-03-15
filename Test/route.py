@@ -98,7 +98,7 @@ def signin_user():
                                from_="+13237725845",
                                body=number)
     except:
-        return make_response("Please Enter correct the number")
+        return make_response("Something Went wrong")
     return render_template("otp.html", phone_number=mobile_number)
 
 
